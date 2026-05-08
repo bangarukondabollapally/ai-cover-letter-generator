@@ -8,7 +8,7 @@ The application generates personalized and professional cover letters based on u
 
 ## 🌐 Live Demo
 
-👉 [Try it live here](https://ai-cover-letter-generator.streamlit.app)
+👉 [Try it live here](https://aicover-letter-generator.streamlit.app)
 
 ---
 
