@@ -14,8 +14,10 @@ The application generates personalized and professional cover letters based on u
 
 ## 🚀 Demo
 
-![Demo 1](screenshots/demo1.png)
-![Demo 2](screenshots/demo2.png)
+<p align="center">
+  <img src="screenshots/demo1.png" width="45%">
+  <img src="screenshots/demo2.png" width="45%">
+</p>
 
 ---
 
