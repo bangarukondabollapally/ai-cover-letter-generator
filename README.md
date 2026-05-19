@@ -6,6 +6,11 @@ The application generates personalized and professional cover letters based on u
 
 ---
 
+## Visual Workflow
+![Visual Workflow](assets/coverletter.png)
+
+---
+
 ## 🌐 Live Demo
 
 👉 [Try it live here](https://aicover-letter-generator.streamlit.app)
@@ -14,8 +19,8 @@ The application generates personalized and professional cover letters based on u
 
 ## 🚀 Demo
 
-![Demo 1](screenshots/demo1.png)
-![Demo 2](screenshots/demo2.png)
+![Demo 1](assets/demo1.png)
+![Demo 2](assets/demo2.png)
 
 ---
 
@@ -48,7 +53,8 @@ The application generates personalized and professional cover letters based on u
 ```text
 ai-cover-letter-generator/
 │
-├── screenshots/
+├── assets/
+│   ├── coverletter.png
 │   ├── demo1.png
 │   └── demo2.png
 ├── app.py
