@@ -4,17 +4,20 @@ from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel
 from langchain_core.output_parsers import PydanticOutputParser
-from typing import List, Optional
 
 class CoverLetter(BaseModel):
-    cover_letter : str
+    cover_letter: str
 
-model = ChatGroq(model="llama-3.3-70b-versatile")
 
-details = input("enter your details like (JD, skills, experience): ")
-tone = input("What type of tone do you want(formal/friendly/confident)? : ")
-template = ChatPromptTemplate.from_messages([
-    ("system", """You are a professional cover letter writer.
+def get_model() -> ChatGroq:
+    """Initialize and return the Groq LLM model."""
+    return ChatGroq(model="llama-3.3-70b-versatile")
+
+
+def get_template() -> ChatPromptTemplate:
+    """Return the cover letter prompt template."""
+    return ChatPromptTemplate.from_messages([
+        ("system", """You are a professional cover letter writer.
 Generate a cover letter for someone APPLYING to a new company.
 
 Candidate level detection:
@@ -54,19 +57,49 @@ Tone guidelines:
 
 Tone should be {tone}.
 {format_instructions}"""),
-    ("human","Here are my details {details}")
-])
+        ("human", "Here are my details:\n{details}")
+    ])
 
-parser = PydanticOutputParser(pydantic_object=CoverLetter)
 
-final_prompt = template.invoke(
-    {
-        "tone":tone,
-        "details":details,
-        "format_instructions":parser.get_format_instructions()
-    }
-)
+def get_parser() -> PydanticOutputParser:
+    """Return the output parser for CoverLetter model."""
+    return PydanticOutputParser(pydantic_object=CoverLetter)
 
-response = model.invoke(final_prompt)
-parsed_output = parser.parse(response.content)
-print(parsed_output.cover_letter)
+
+def generate_cover_letter(details: str, tone: str) -> str:
+    """Generate a cover letter based on candidate details and desired tone.
+
+    Args:
+        details: Candidate's details (JD, skills, experience, etc.)
+        tone: Desired tone - one of "formal", "friendly", or "confident"
+
+    Returns:
+        The generated cover letter text.
+    """
+    model = get_model()
+    template = get_template()
+    parser = get_parser()
+
+    final_prompt = template.invoke({
+        "tone": tone,
+        "details": details,
+        "format_instructions": parser.get_format_instructions()
+    })
+
+    response = model.invoke(final_prompt)
+    parsed_output = parser.parse(response.content)
+
+    return parsed_output.cover_letter
+
+
+def main():
+    """CLI entry point for generating a cover letter."""
+    details = input("Enter your details (JD, skills, experience): ")
+    tone = input("What type of tone do you want (formal/friendly/confident)? : ")
+
+    cover_letter = generate_cover_letter(details, tone)
+    print(cover_letter)
+
+
+if __name__ == "__main__":
+    main()
